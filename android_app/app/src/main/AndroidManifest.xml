@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -36,9 +36,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <activity
-            android:name=".SimpleTestActivity"
+            android:name=".SplashActivity"
             android:exported="false"
             android:theme="@style/Theme.EnvironmentalControl.Splash">
         </activity>
@@ -55,7 +55,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities=".fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -65,4 +65,4 @@
 
     </application>
 
-</manifest> 
+</manifest>
