@@ -25,7 +25,6 @@ android {
             keyPassword 'android'
         }
         release {
-            signingConfig signingConfigs.debug  // Use debug keystore for release
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
@@ -40,7 +39,6 @@ android {
             minifyEnabled false
         }
         release {
-            signingConfig signingConfigs.debug  // Use debug keystore for release
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
