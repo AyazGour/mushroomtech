@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseApiServic
             if (firebaseApiService != null) {
                 executorService.execute(() -> {
                     try {
-                        firebaseApiService.toggleWaterPump();
+                        showToast("Water pump toggle - Coming soon!");
                         mainHandler.post(() -> showToast("Water pump toggled"));
                     } catch (Exception e) {
                         mainHandler.post(() -> showToast("Failed to toggle water pump: " + e.getMessage()));
