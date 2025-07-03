@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Background circle -->
+    <path
+        android:fillColor="@color/dark_green"
+        android:pathData="M54,54m-54,0a54,54 0,1 1,108 0a54,54 0,1 1,-108 0" />
+    
+    <!-- Mushroom shape -->
+    <path
+        android:fillColor="@color/bright_green"
+        android:pathData="M54,20 C45,20 38,27 38,36 C38,45 45,52 54,52 C63,52 70,45 70,36 C70,27 63,20 54,20 Z" />
+    
+    <!-- Stem -->
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M50,52 L58,52 L58,75 L50,75 Z" />
+    
+    <!-- Base -->
+    <path
+        android:fillColor="@color/medium_green"
+        android:pathData="M45,75 L63,75 L60,80 L48,80 Z" />
+        
+</vector> 
