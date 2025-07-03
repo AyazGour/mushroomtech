@@ -1,5 +1,6 @@
 package com.mushroomtech.app;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.LinearLayout;
@@ -8,9 +9,8 @@ import android.widget.Toast;
 import android.widget.ScrollView;
 import android.graphics.Color;
 import android.view.Gravity;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class SimpleTestActivity extends AppCompatActivity {
+public class CrashSafeActivity extends Activity {
     
     private TextView statusText;
     private StringBuilder logBuilder = new StringBuilder();
@@ -21,13 +21,19 @@ public class SimpleTestActivity extends AppCompatActivity {
         
         try {
             createUI();
-            log("✅ App started successfully!");
-            log("📱 UI created without crashes");
+            log("✅ Crash-Safe App Started!");
+            log("📱 Minimal UI loaded successfully");
             testBasicFunctionality();
         } catch (Exception e) {
-            // Fallback if even basic UI fails
-            setContentView(createEmergencyUI());
-            Toast.makeText(this, "Emergency mode: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            // Ultimate fallback
+            TextView emergency = new TextView(this);
+            emergency.setText("🚨 EMERGENCY MODE ACTIVE\n\n" +
+                             "App is running in ultra-safe mode.\n\n" +
+                             "Error: " + e.getMessage());
+            emergency.setTextSize(16);
+            emergency.setPadding(40, 40, 40, 40);
+            emergency.setBackgroundColor(Color.parseColor("#FFEBEE"));
+            setContentView(emergency);
         }
     }
     
@@ -44,8 +50,8 @@ public class SimpleTestActivity extends AppCompatActivity {
         
         // Title
         TextView title = new TextView(this);
-        title.setText("🍄 Mushroom Tech");
-        title.setTextSize(28);
+        title.setText("🍄 Mushroom Tech - Safe Mode");
+        title.setTextSize(24);
         title.setTextColor(Color.parseColor("#2E7D32"));
         title.setGravity(Gravity.CENTER);
         title.setPadding(0, 0, 0, 30);
@@ -53,19 +59,19 @@ public class SimpleTestActivity extends AppCompatActivity {
         
         // Status display
         statusText = new TextView(this);
-        statusText.setText("Initializing...");
+        statusText.setText("Initializing safe mode...");
         statusText.setTextSize(14);
         statusText.setTextColor(Color.BLACK);
         statusText.setBackgroundColor(Color.parseColor("#F5F5F5"));
         statusText.setPadding(20, 20, 20, 20);
-        statusText.setMinHeight(200);
+        statusText.setMinHeight(300);
         mainLayout.addView(statusText);
         
         // Test buttons
-        addButton(mainLayout, "🔄 Refresh Status", this::refreshStatus);
-        addButton(mainLayout, "🔥 Test Firebase", this::testFirebase);
-        addButton(mainLayout, "📊 Test Main Activity", this::testMainActivity);
+        addButton(mainLayout, "🔄 Refresh", this::refreshStatus);
         addButton(mainLayout, "📱 Device Info", this::showDeviceInfo);
+        addButton(mainLayout, "🔥 Test Firebase", this::testFirebase);
+        addButton(mainLayout, "📊 Open Main App", this::openMainApp);
         
         scrollView.addView(mainLayout);
         setContentView(scrollView);
@@ -76,8 +82,6 @@ public class SimpleTestActivity extends AppCompatActivity {
         button.setText(text);
         button.setTextSize(16);
         button.setPadding(20, 15, 20, 15);
-        button.setBackgroundColor(Color.parseColor("#4CAF50"));
-        button.setTextColor(Color.WHITE);
         
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -90,40 +94,18 @@ public class SimpleTestActivity extends AppCompatActivity {
             try {
                 action.run();
             } catch (Exception e) {
-                log("❌ Button error: " + e.getMessage());
+                log("❌ Error: " + e.getMessage());
                 updateStatus();
+                Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         
         parent.addView(button);
     }
     
-    private TextView createEmergencyUI() {
-        TextView emergency = new TextView(this);
-        emergency.setText("🚨 EMERGENCY MODE\n\n" +
-                         "App is running in minimal mode.\n" +
-                         "Basic functionality available.\n\n" +
-                         "Please check logs for details.");
-        emergency.setTextSize(16);
-        emergency.setPadding(40, 40, 40, 40);
-        emergency.setBackgroundColor(Color.parseColor("#FFEBEE"));
-        emergency.setTextColor(Color.parseColor("#C62828"));
-        return emergency;
-    }
-    
     private void testBasicFunctionality() {
         log("🔍 Testing basic functionality...");
         
-        // Test 1: Memory
-        try {
-            Runtime runtime = Runtime.getRuntime();
-            long maxMemory = runtime.maxMemory() / 1024 / 1024;
-            log("📊 Memory available: " + maxMemory + " MB");
-        } catch (Exception e) {
-            log("❌ Memory test failed: " + e.getMessage());
-        }
-        
-        // Test 2: Package info
         try {
             String packageName = getPackageName();
             log("📦 Package: " + packageName);
@@ -131,76 +113,65 @@ public class SimpleTestActivity extends AppCompatActivity {
             log("❌ Package test failed: " + e.getMessage());
         }
         
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            long maxMemory = runtime.maxMemory() / 1024 / 1024;
+            log("📊 Memory: " + maxMemory + " MB");
+        } catch (Exception e) {
+            log("❌ Memory test failed: " + e.getMessage());
+        }
+        
         updateStatus();
     }
     
     private void refreshStatus() {
-        log("🔄 Status refreshed at " + new java.util.Date());
-        updateStatus();
-    }
-    
-    private void testFirebase() {
-        log("🔥 Testing Firebase...");
-        try {
-            // Try to load Firebase class
-            Class.forName("com.google.firebase.FirebaseApp");
-            log("✅ Firebase classes found");
-            
-            // Try to initialize
-            com.google.firebase.FirebaseApp.initializeApp(this);
-            log("✅ Firebase initialized successfully");
-            
-        } catch (ClassNotFoundException e) {
-            log("❌ Firebase classes not found: " + e.getMessage());
-        } catch (Exception e) {
-            log("❌ Firebase error: " + e.getMessage());
-        }
-        updateStatus();
-    }
-    
-    private void testMainActivity() {
-        log("📊 Testing Main Activity...");
-        try {
-            // Check if MainActivity class exists
-            Class.forName("com.mushroomtech.app.MainActivity");
-            log("✅ MainActivity class found");
-            
-            // Try to create intent
-            android.content.Intent intent = new android.content.Intent(this, 
-                com.mushroomtech.app.MainActivity.class);
-            log("✅ Intent created successfully");
-            
-            // Start activity
-            startActivity(intent);
-            log("✅ MainActivity launched");
-            
-        } catch (ClassNotFoundException e) {
-            log("❌ MainActivity class not found");
-        } catch (Exception e) {
-            log("❌ MainActivity error: " + e.getMessage());
-        }
+        log("🔄 Status refreshed at " + System.currentTimeMillis());
         updateStatus();
     }
     
     private void showDeviceInfo() {
         log("📱 Device Information:");
         try {
-            log("• Android Version: " + android.os.Build.VERSION.RELEASE);
-            log("• API Level: " + android.os.Build.VERSION.SDK_INT);
+            log("• Android: " + android.os.Build.VERSION.RELEASE);
+            log("• API: " + android.os.Build.VERSION.SDK_INT);
             log("• Device: " + android.os.Build.MODEL);
-            log("• Manufacturer: " + android.os.Build.MANUFACTURER);
+            log("• Brand: " + android.os.Build.MANUFACTURER);
         } catch (Exception e) {
             log("❌ Device info error: " + e.getMessage());
         }
         updateStatus();
     }
     
+    private void testFirebase() {
+        log("🔥 Testing Firebase...");
+        try {
+            Class.forName("com.google.firebase.FirebaseApp");
+            log("✅ Firebase classes available");
+        } catch (ClassNotFoundException e) {
+            log("❌ Firebase not found: " + e.getMessage());
+        } catch (Exception e) {
+            log("❌ Firebase error: " + e.getMessage());
+        }
+        updateStatus();
+    }
+    
+    private void openMainApp() {
+        log("📊 Attempting to open main app...");
+        try {
+            android.content.Intent intent = new android.content.Intent(this, 
+                com.mushroomtech.app.MainActivity.class);
+            startActivity(intent);
+            log("✅ Main app launched successfully");
+        } catch (Exception e) {
+            log("❌ Main app failed: " + e.getMessage());
+            Toast.makeText(this, "Main app not available: " + e.getMessage(), 
+                         Toast.LENGTH_LONG).show();
+        }
+        updateStatus();
+    }
+    
     private void log(String message) {
         logBuilder.append(message).append("\n");
-        // Also show toast for important messages
-        if (message.contains("❌") || message.contains("✅")) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }
     }
     
     private void updateStatus() {
@@ -208,4 +179,4 @@ public class SimpleTestActivity extends AppCompatActivity {
             statusText.setText(logBuilder.toString());
         }
     }
-}
+} 
