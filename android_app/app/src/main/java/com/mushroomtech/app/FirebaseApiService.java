@@ -277,7 +277,7 @@ public class FirebaseApiService {
     
     public void stopListening() {
         // Remove all listeners when app is paused/stopped
-        databaseRef.removeEventListener(null);
+        // Note: Specific listeners should be removed individually
     }
     
     public boolean testConnection() {
