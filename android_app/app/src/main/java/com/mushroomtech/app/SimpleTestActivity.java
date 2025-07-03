@@ -1,4 +1,4 @@
-﻿package com.mushroomtech.app;
+package com.mushroomtech.app;
 
 import android.os.Bundle;
 import android.widget.TextView;
