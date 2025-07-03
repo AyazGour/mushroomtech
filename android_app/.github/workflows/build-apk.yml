@@ -1,0 +1,105 @@
+name: Build MushroomTech APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+      
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Build debug APK
+      run: ./gradlew assembleDebug
+      
+    - name: Build release APK
+      run: ./gradlew assembleRelease
+      
+    - name: Upload Debug APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: MushroomTech-Debug-APK
+        path: app/build/outputs/apk/debug/app-debug.apk
+        
+    - name: Upload Release APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: MushroomTech-Release-APK
+        path: app/build/outputs/apk/release/app-release-unsigned.apk
+        
+    - name: Create Release
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.${{ github.run_number }}
+        release_name: MushroomTech v1.0.${{ github.run_number }}
+        body: |
+          🍄 MushroomTech Android App Release
+          
+          ## Features:
+          - ✅ Real-time environmental monitoring
+          - ✅ Firebase cloud integration
+          - ✅ Gemini AI mushroom analysis
+          - ✅ Manual device controls
+          - ✅ Professional mushroom-themed UI
+          
+          ## Installation:
+          1. Download the APK file below
+          2. Enable "Install from unknown sources" on your Android device
+          3. Install the APK
+          4. Grant required permissions (Camera, Storage)
+          5. Connect to your Firebase project
+          
+          ## Hardware Requirements:
+          - Android 7.0+ (API level 24+)
+          - Camera for AI analysis
+          - Internet connection for Firebase
+          
+          ## System Components:
+          - ESP32 Water Monitor
+          - Raspberry Pi Environmental Controller
+          - Firebase Realtime Database
+          - Gemini AI Integration
+        draft: false
+        prerelease: false
+        
+    - name: Upload Release Asset
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: app/build/outputs/apk/debug/app-debug.apk
+        asset_name: MushroomTech-v1.0.${{ github.run_number }}.apk
+        asset_content_type: application/vnd.android.package-archive 

@@ -1,0 +1,13 @@
+Flask==2.3.3
+RPi.GPIO==0.7.1
+Adafruit-DHT==1.4.0
+requests==2.31.0
+firebase-admin==6.4.0
+google-cloud-firestore==2.13.1
+google-auth==2.25.2
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+sqlite3
+dataclasses
+typing
+pytz==2023.3 

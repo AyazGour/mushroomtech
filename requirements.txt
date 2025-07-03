@@ -1,0 +1,7 @@
+Flask==2.3.3
+RPi.GPIO==0.7.1
+Adafruit-DHT==1.4.0
+requests==2.31.0
+sqlite3
+dataclasses
+typing 

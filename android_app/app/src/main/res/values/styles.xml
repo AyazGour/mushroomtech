@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme -->
+    <style name="Theme.EnvironmentalControl" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/dark_green</item>
+        <item name="colorPrimaryVariant">@color/medium_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/bright_green</item>
+        <item name="colorSecondaryVariant">@color/light_green</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/dark_green_background</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorSurface">@color/card_background</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:statusBarColor">@color/dark_green</item>
+        <item name="android:navigationBarColor">@color/dark_green_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- Splash screen theme -->
+    <style name="Theme.EnvironmentalControl.Splash" parent="Theme.EnvironmentalControl">
+        <item name="android:windowBackground">@color/dark_green_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Button Styles -->
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="backgroundTint">@color/dark_green</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="ButtonStyle.Primary">
+        <item name="backgroundTint">@color/bright_green</item>
+    </style>
+
+    <style name="ButtonStyle.Secondary">
+        <item name="backgroundTint">@color/medium_green</item>
+    </style>
+
+    <style name="ButtonStyle.Disabled">
+        <item name="backgroundTint">@color/button_disabled</item>
+        <item name="android:textColor">@color/medium_gray</item>
+    </style>
+
+    <!-- Card Styles -->
+    <style name="CardStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/card_background</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">6dp</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="TextStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextStyle.Heading">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextStyle.Subheading">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextStyle.Body">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextStyle.Caption">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/light_green</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextStyle.Value">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/bright_green</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- FloatingActionButton Style -->
+    <style name="FabStyle" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/bright_green</item>
+        <item name="tint">@color/white</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <!-- Progress Bar Style -->
+    <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/bright_green</item>
+    </style>
+
+    <!-- Toolbar Style -->
+    <style name="ToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/dark_green</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="subtitleTextColor">@color/light_green</item>
+    </style>
+
+</resources> 
