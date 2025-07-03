@@ -46,16 +46,6 @@
             android:exported="false"
             android:theme="@style/Theme.EnvironmentalControl" />
 
-        <activity
-            android:name=".DataAnalysisActivity"
-            android:exported="false"
-            android:theme="@style/Theme.EnvironmentalControl" />
-
-        <activity
-            android:name=".ControlPanelActivity"
-            android:exported="false"
-            android:theme="@style/Theme.EnvironmentalControl" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
