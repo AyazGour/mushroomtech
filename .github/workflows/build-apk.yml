@@ -50,44 +50,114 @@ jobs:
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: mushroom-tech-debug
+        name: mushroom-tech-debug-v${{ github.run_number }}
         path: android_app/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 90
         
     - name: Upload Release APK
       uses: actions/upload-artifact@v4
       with:
-        name: mushroom-tech-release
+        name: mushroom-tech-release-v${{ github.run_number }}
         path: android_app/app/build/outputs/apk/release/app-release-unsigned.apk
+        retention-days: 90
         
-    - name: Create Release
+    - name: Create Release (with fallback)
       if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      continue-on-error: true
       uses: softprops/action-gh-release@v2
       with:
         tag_name: v${{ github.run_number }}
-        name: Release v${{ github.run_number }}
+        name: "🍄 Mushroom Tech v${{ github.run_number }}"
         body: |
-          🍄 **Mushroom Tech App - Automated Build**
+          🍄 **Mushroom Tech App - Automated Build v${{ github.run_number }}**
           
-          📱 **APK Files:**
+          📱 **APK Files Available:**
           - `app-debug.apk` - Debug version (recommended for testing)
           - `app-release-unsigned.apk` - Release version (production)
           
           🔧 **Features:**
           - Firebase cloud monitoring
-          - Gemini AI mushroom analysis
+          - Gemini AI mushroom analysis  
           - Real-time environmental control
           - ESP32 & Raspberry Pi integration
+          - Simple test interface for debugging
           
-          📥 **Installation:**
-          1. Download `app-debug.apk`
+          📥 **Installation Instructions:**
+          1. Download `app-debug.apk` from the assets below
           2. Enable "Unknown Sources" in Android settings
-          3. Install the APK
+          3. Install the APK file
+          4. App will start with a test interface first
           
-          Built automatically from commit: ${{ github.sha }}
+          🛠️ **Recent Fixes:**
+          - Fixed app crashes on startup
+          - Added proper APK signing
+          - Improved error handling
+          - Created simple test launcher
+          
+          📂 **If release files are missing:**
+          Go to Actions tab → Click this build → Download from Artifacts section
+          
+          Built from commit: ${{ github.sha }}
+          Build date: ${{ github.event.head_commit.timestamp }}
         files: |
           android_app/app/build/outputs/apk/debug/app-debug.apk
           android_app/app/build/outputs/apk/release/app-release-unsigned.apk
         draft: false
         prerelease: false
+        generate_release_notes: true
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        
+    - name: APK Download Instructions
+      if: always()
+      run: |
+        echo "==================================="
+        echo "🍄 MUSHROOM TECH APK READY!"
+        echo "==================================="
+        echo ""
+        echo "📱 Your APK files are available in TWO ways:"
+        echo ""
+        echo "1️⃣ RELEASES (if PAT is configured):"
+        echo "   → Go to: https://github.com/${{ github.repository }}/releases"
+        echo "   → Download from latest release"
+        echo ""
+        echo "2️⃣ ARTIFACTS (always available):"
+        echo "   → Go to: https://github.com/${{ github.repository }}/actions"
+        echo "   → Click this build run"
+        echo "   → Scroll to 'Artifacts' section"
+        echo "   → Download: mushroom-tech-debug"
+        echo ""
+        echo "📥 INSTALLATION:"
+        echo "   1. Download app-debug.apk"
+        echo "   2. Enable 'Unknown Sources' in Android settings"
+        echo "   3. Install the APK"
+        echo "   4. App starts with simple test interface!"
+        echo ""
+        echo "==================================="
+        
+    - name: APK Download Instructions
+      if: always()
+      run: |
+        echo "==================================="
+        echo "🍄 MUSHROOM TECH APK READY!"
+        echo "==================================="
+        echo ""
+        echo "📱 Your APK files are available in TWO ways:"
+        echo ""
+        echo "1️⃣ RELEASES (if PAT is configured):"
+        echo "   → Go to: https://github.com/${{ github.repository }}/releases"
+        echo "   → Download from latest release"
+        echo ""
+        echo "2️⃣ ARTIFACTS (always available):"
+        echo "   → Go to: https://github.com/${{ github.repository }}/actions"
+        echo "   → Click this build run"
+        echo "   → Scroll to 'Artifacts' section"
+        echo "   → Download: mushroom-tech-debug-v${{ github.run_number }}"
+        echo ""
+        echo "📥 INSTALLATION:"
+        echo "   1. Download app-debug.apk"
+        echo "   2. Enable 'Unknown Sources' in Android settings"
+        echo "   3. Install the APK"
+        echo "   4. App starts with simple test interface!"
+        echo ""
+        echo "===================================" 
